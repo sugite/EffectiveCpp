@@ -1,13 +1,18 @@
 在operator=中处理“自我赋值”
-handle assignment to self in operator=.
+==
 
 自我赋值发生在对象被赋值给自己时:
+
+```C++
 class Widget{...};
 Widget w ;
 ...
 w = w ;
+```
 
 假设建立一个class用来保存一个指针指向一块动态分配的位图：
+
+```C++
 class Bitmap{...};
 class Widget{
 	...
@@ -21,7 +26,11 @@ Widget& Widget::operator=(const Widget& rhs)
 	pb = new Bitmap(*rhs.pb);
 	return *this;
 }
+```
+
 这里就有问题了，因为rhs和this有可能是同一个对象，所以应该是：
+
+```C++
 Widget& Widget::operator=(const Widget& rhs)
 {
 	if(this==&rhs) return *this;
@@ -29,8 +38,12 @@ Widget& Widget::operator=(const Widget& rhs)
 	pb = new Bitmap(*rhs.pb);
 	return *this;
 }
+```
+
 但是这样仍然不具备“异常安全性”，因为new Bitmap可能会有异常，导致最后错误。
 我们只需要在复制pb所指东西之前别删除pb：
+
+```C++
 Widget& Widget::operator=(const Widget& rhs)
 {
 	Bitmap* pOrig = pb ;
@@ -38,8 +51,11 @@ Widget& Widget::operator=(const Widget& rhs)
 	delete pOrig;
 	return *this;
 }
+```
 
 另一个常见的方法是copy and swap ：
+
+```C++
 class Widget{
 ...
 	void swap(Widget &rhs);
@@ -52,3 +68,4 @@ Widget& Widget::operator=(const Widget& rhs)
 	swap(temp);
 	return *this;
 }
+```
