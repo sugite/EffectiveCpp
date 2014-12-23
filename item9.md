@@ -1,7 +1,9 @@
 绝不在构造和析构过程中调用虚函数
-Never call virtual function during construction or destruction
+==
 
 假如有以下继承体系：
+
+```C++
 class Transaction{
 	public:
 		Transaction();
@@ -27,8 +29,10 @@ class SellTransaction:public Transaction{
 		virtual void logTransaction() const ;
 		...
 };
+```
+
 现在，执行以下语句，会发生什么：
-BuyTransaction b ;
+`BuyTransaction b ;`
 
 显然，基类构造函数执行的时候调用的logTransaction不是派生类的版本。
 同样道理也适用于析构函数。一旦派生类析构函数开始执行，对象内的派生类成员变量
