@@ -1,5 +1,5 @@
 尽量用 const、enum、inline 替换 #define
-==
+===
 
 比如	`#define ASPECT_RATIO 1.653`
 使用常量替换
