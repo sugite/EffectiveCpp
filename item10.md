@@ -1,6 +1,7 @@
 令operator=返回一个reference to *this
-Hava assignment operator return a reference to *this
+==
 
+```C++
 class Widget{
 	public:
 		...
@@ -20,3 +21,5 @@ class Widget{
 			return *this;
 		}
 };
+```
+
