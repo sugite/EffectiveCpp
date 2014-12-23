@@ -1,9 +1,11 @@
 了解C++默默编写并调用哪些函数
-Know what functions C++ silently writes and calls.
+==
 
 如果写下：
-class Empty{};
+`class Empty{};`
 则相当于：
+
+```C++
 class Empty{
 	public:
 		Empty(){...}
@@ -13,6 +15,7 @@ class Empty{
 		Empty& operator=(const Empty& rhs){...}
 		//以上这些函数都是public并且inline的
 };
+```
 
 编译器产生的析构函数是non-virtual，除非这个class的base class自身声明有virtual析构函数。
 
